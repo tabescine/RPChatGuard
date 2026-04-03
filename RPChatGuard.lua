@@ -159,7 +159,7 @@ local function HookedSendChatMessage(msg, chatType, language, target, ...)
     local ct = chatType and chatType:upper() or "SAY"
 
     if debug_mode then
-        print(PREFIX .. "|cffffcc00DEBUG:|r SendChatMessage — type="
+        print(PREFIX .. "|cffffcc00DEBUG:|r SendChatMessage - type="
             .. tostring(ct) .. "  safe=" .. tostring(safeChannels[ct] or false))
     end
 
@@ -227,7 +227,7 @@ local function DetectChatType(editBox)
         if num then
             return "CHANNEL", rest or "", num
         end
-        -- Unknown slash command — let it through
+        -- Unknown slash command - let it through
         return nil
     end
     local ct = editBox:GetAttribute("chatType") or "SAY"
@@ -260,7 +260,7 @@ local function HookEditBox(editBox)
         end
 
         if debug_mode then
-            print(PREFIX .. "|cffffcc00DEBUG:|r EditBox — type="
+            print(PREFIX .. "|cffffcc00DEBUG:|r EditBox - type="
                 .. tostring(chatType) .. "  safe=" .. tostring(safeChannels[chatType] or false))
         end
 
@@ -488,7 +488,7 @@ f:SetScript("OnEvent", function(self, event, addon)
     SendChatMessage = HookedSendChatMessage
     HookAllEditBoxes()
 
-    print(PREFIX .. "v4 loaded — guard is "
+    print(PREFIX .. "v4 loaded - guard is "
         .. (enabled and "|cff00ff00ON|r" or "|cffff4444OFF|r")
         .. ".  |cff88ccff/rpg help|r for commands.")
 end)
