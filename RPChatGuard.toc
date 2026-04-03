@@ -1,0 +1,8 @@
+## Interface: 120001
+## Title: RP Chat Guard
+## Notes: Prevents accidental messages to non-RP channels by requiring confirmation.
+## Author: You
+## Version: 1.0.0
+## SavedVariables: RPChatGuardDB
+
+RPChatGuard.lua

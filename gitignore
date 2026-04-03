@@ -1,0 +1,15 @@
+# WoW saved variables (local to each install)
+WTF/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+CLAUDE.md
+AGENTS.md
