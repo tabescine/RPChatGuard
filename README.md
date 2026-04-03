@@ -48,6 +48,40 @@ Out of the box, these channels pass through without a popup:
 - Emote
 - Whisper
 - Yell
+
+## Development
+
+### Linting
+
+The project uses [luacheck](https://github.com/mpeterv/luacheck) for linting. Install it with:
+
+```bash
+luarocks install luacheck
+```
+
+Then run:
+
+```bash
+luacheck --config .luacheckrc *.lua
+```
+
+Linting is automatically run in CI on pushes and pull requests.
+
+### Formatting
+
+Use [stylua](https://github.com/JohnnyMorganz/StyLua) for formatting. Install with:
+
+```bash
+cargo install stylua
+```
+
+Then run the format script:
+
+```bash
+./format.sh
+```
+
+This will format all `.lua` files in place.
 - BNet Whisper
 
 Everything else (Guild, Party, Raid, Officer, Instance, numbered channels, etc.) requires confirmation.
