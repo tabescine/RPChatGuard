@@ -1,5 +1,19 @@
 -- RP Chat Guard - Core
--- Shared namespace, data tables, SavedVariables, and initialisation.
+--
+-- Owns the shared addon namespace (RPChatGuard) and all constant data tables.
+-- This file is loaded first (see RPChatGuard.toc) so every table and field
+-- defined here is available to Guard.lua and Config.lua as upvalues via the
+-- shared addon table.
+--
+-- Handles the ADDON_LOADED event to read RPChatGuardDB into live state, apply
+-- first-run defaults, and then call addon:InstallHooks() (defined in Guard.lua)
+-- to activate interception.
+--
+-- Exposes on the addon table:
+--   .PREFIX, .enabled, .debug_mode, .pendingMsg, .safeChannels
+--   .VALID_CHANNELS, .ALIASES, .CHANNEL_LABELS, .DEFAULT_SAFE
+--   :SaveSettings()    - flush live state back to RPChatGuardDB
+--   :IsChannelSafe(chatType) - boolean helper used by Guard.lua
 
 RPChatGuard = RPChatGuard or {}
 local addon = RPChatGuard

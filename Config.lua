@@ -1,8 +1,23 @@
 -- RP Chat Guard - Config
--- Slash commands, channel management, and status reporting.
+--
+-- Registers the /rpg (and /rpchatguard) slash commands and handles all
+-- subcommands: on/off toggle, status display, allow/block channel management,
+-- reset to defaults, and debug toggle.
+--
+-- All state lives on the shared addon table (initialised in Core.lua). This
+-- file only reads and writes that table - it owns no state of its own.
+--
+-- Reads/writes on the addon table:
+--   .enabled, .debug_mode, .safeChannels, .DEFAULT_SAFE
+--   .ALIASES, .VALID_CHANNELS, .CHANNEL_LABELS, .PREFIX
+--   :SaveSettings()
 
 local addon = RPChatGuard
 
+-- Converts a user-typed channel name to its internal WoW chat type key.
+-- Checks addon.ALIASES first so short forms ("g", "ra", "bnet") resolve
+-- correctly, then falls back to a direct VALID_CHANNELS lookup for users
+-- who type the full key ("GUILD", "RAID", etc.). Returns nil if unrecognised.
 local function ResolveChannel(input)
     local lower = input:lower()
     if addon.ALIASES[lower] then

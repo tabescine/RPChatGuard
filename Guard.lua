@@ -1,5 +1,26 @@
 -- RP Chat Guard - Guard
--- SendChatMessage hook (Layer 1) and edit box hook (Layer 2).
+--
+-- Implements two-layer message interception:
+--
+--   Layer 1 - replaces the global SendChatMessage function. Catches sends from
+--   macros, other addons, and any Lua code that calls SendChatMessage directly.
+--
+--   Layer 2 - hooks each chat edit box's OnEnterPressed script. This layer is
+--   required because retail WoW's C-side chat handling bypasses a Lua-level
+--   SendChatMessage replacement for user-typed input. The hook parses the raw
+--   edit box text for slash commands before WoW processes them, so the
+--   destination channel is known at interception time.
+--
+-- Reads from the shared addon table (initialised in Core.lua):
+--   .enabled, .debug_mode, .safeChannels, .CHANNEL_LABELS, .PREFIX
+--
+-- Writes to the shared addon table:
+--   .pendingMsg          - stored while the confirmation popup is open
+--   .OriginalSendChatMessage - the real SendChatMessage, saved before hooking
+--
+-- Exposes on the addon table:
+--   :InstallHooks()      - called once by Core.lua on ADDON_LOADED
+--   :HookAllEditBoxes()  - hooks all ChatFrameN edit boxes; safe to re-call
 
 local addon = RPChatGuard
 
@@ -93,6 +114,18 @@ end
 
 -- Layer 2: Hook chat edit boxes
 
+-- Inspects the edit box text and returns the intended WoW chat type.
+--
+-- Returns up to three values: chatType, msgBody, chanTarget
+--   chatType   - WoW chat type string, e.g. "GUILD", "SAY", "CHANNEL"
+--   msgBody    - message text with the leading slash command stripped
+--   chanTarget - numeric channel string for /NNN sends; nil otherwise
+--
+-- Returns nil (all three values) when the text starts with a slash command
+-- not present in SLASH_MAP. This covers addon commands (/rpg, /dance, etc.)
+-- and signals the caller to pass the event through without interception.
+-- When there is no slash prefix, the chat type is read from the edit box's
+-- chatType attribute (the channel the box is currently set to).
 local function DetectChatType(editBox)
     local text = editBox:GetText() or ""
     local cmd = text:match("^(/[%a]+)")
@@ -113,6 +146,12 @@ local function DetectChatType(editBox)
     return ct:upper(), text
 end
 
+-- Wraps editBox's OnEnterPressed script to intercept sends to guarded channels.
+-- Idempotent: sets editBox._rpgHooked on first call and returns early on
+-- subsequent calls, so it is safe to call on the same box more than once.
+-- The original OnEnterPressed script is captured at hook time and called for
+-- any message that should pass through (guard off, safe channel, unknown
+-- slash command, or empty box).
 local function HookEditBox(editBox)
     if editBox._rpgHooked then return end
     editBox._rpgHooked = true
