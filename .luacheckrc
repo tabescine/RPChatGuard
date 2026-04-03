@@ -25,6 +25,9 @@ globals = {
     -- SavedVariables
     "RPChatGuardDB",
 
+    -- Addon namespace
+    "RPChatGuard",
+
     -- Utility
     "strtrim",
     "print",
