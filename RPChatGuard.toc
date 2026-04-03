@@ -5,4 +5,6 @@
 ## Version: 1.0.0
 ## SavedVariables: RPChatGuardDB
 
-RPChatGuard.lua
+Core.lua
+Guard.lua
+Config.lua
