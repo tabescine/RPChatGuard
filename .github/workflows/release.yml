@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build addon zip
+        run: |
+          mkdir -p dist/RPChatGuard
+          cp RPChatGuard.toc Core.lua Guard.lua Config.lua dist/RPChatGuard/
+          cd dist
+          zip -r ../RPChatGuard-${{ github.ref_name }}.zip RPChatGuard/
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: RPChatGuard-${{ github.ref_name }}.zip
+          generate_release_notes: true
