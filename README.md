@@ -48,19 +48,25 @@ Out of the box, these channels pass through without a popup:
 - Emote
 - Whisper
 - Yell
+- BNet Whisper
+
+Everything else (Guild, Party, Raid, Officer, Instance, numbered channels, etc.) requires confirmation.
 
 ## Development
 
 ### Linting
 
-The project uses [luacheck](https://github.com/mpeterv/luacheck) for linting. Install it with:
+The project uses [luacheck](https://github.com/mpeterv/luacheck) for linting.
 
+**Option 1: Install via luarocks (recommended if you have it):**
 ```bash
 luarocks install luacheck
 ```
 
-Then run:
+**Option 2: Download pre-built binary:**
+Download the latest binary for your platform from the [releases page](https://github.com/mpeterv/luacheck/releases) and place it in your PATH.
 
+Then run:
 ```bash
 luacheck --config .luacheckrc *.lua
 ```
@@ -69,22 +75,22 @@ Linting is automatically run in CI on pushes and pull requests.
 
 ### Formatting
 
-Use [stylua](https://github.com/JohnnyMorganz/StyLua) for formatting. Install with:
+Use [stylua](https://github.com/JohnnyMorganz/StyLua) for formatting.
 
+**Option 1: Install via Cargo (recommended if you have Rust):**
 ```bash
 cargo install stylua
 ```
 
-Then run the format script:
+**Option 2: Download pre-built binary:**
+Download the latest binary for your platform from the [releases page](https://github.com/JohnnyMorganz/StyLua/releases) and place it in your PATH.
 
+Then run the format script:
 ```bash
 ./format.sh
 ```
 
 This will format all `.lua` files in place.
-- BNet Whisper
-
-Everything else (Guild, Party, Raid, Officer, Instance, numbered channels, etc.) requires confirmation.
 
 ## Screenshots
 
