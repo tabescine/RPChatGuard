@@ -1,4 +1,4 @@
--- RP Chat Guard — Core
+-- RP Chat Guard - Core
 -- Shared namespace, data tables, SavedVariables, and initialisation.
 
 RPChatGuard = RPChatGuard or {}
@@ -126,7 +126,7 @@ f:SetScript("OnEvent", function(self, event, addonName)
     -- Guard.lua exposes InstallHooks after all files are loaded.
     addon:InstallHooks()
 
-    print(addon.PREFIX .. "v4 loaded — guard is "
+    print(addon.PREFIX .. "v4 loaded - guard is "
         .. (addon.enabled and "|cff00ff00ON|r" or "|cffff4444OFF|r")
         .. ".  |cff88ccff/rpg help|r for commands.")
 end)

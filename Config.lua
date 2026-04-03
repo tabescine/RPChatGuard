@@ -1,4 +1,4 @@
--- RP Chat Guard — Config
+-- RP Chat Guard - Config
 -- Slash commands, channel management, and status reporting.
 
 local addon = RPChatGuard

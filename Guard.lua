@@ -1,4 +1,4 @@
--- RP Chat Guard — Guard
+-- RP Chat Guard - Guard
 -- SendChatMessage hook (Layer 1) and edit box hook (Layer 2).
 
 local addon = RPChatGuard
@@ -52,7 +52,7 @@ local function HookedSendChatMessage(msg, chatType, language, target, ...)
     local ct = chatType and chatType:upper() or "SAY"
 
     if addon.debug_mode then
-        print(addon.PREFIX .. "|cffffcc00DEBUG:|r SendChatMessage — type="
+        print(addon.PREFIX .. "|cffffcc00DEBUG:|r SendChatMessage - type="
             .. tostring(ct) .. "  safe=" .. tostring(addon.safeChannels[ct] or false))
     end
 
@@ -106,7 +106,7 @@ local function DetectChatType(editBox)
         if num then
             return "CHANNEL", rest or "", num
         end
-        -- Unknown slash command — let it pass through untouched.
+        -- Unknown slash command - let it pass through untouched.
         return nil
     end
     local ct = editBox:GetAttribute("chatType") or "SAY"
@@ -137,7 +137,7 @@ local function HookEditBox(editBox)
         end
 
         if addon.debug_mode then
-            print(addon.PREFIX .. "|cffffcc00DEBUG:|r EditBox — type="
+            print(addon.PREFIX .. "|cffffcc00DEBUG:|r EditBox - type="
                 .. tostring(chatType) .. "  safe=" .. tostring(addon.safeChannels[chatType] or false))
         end
 
